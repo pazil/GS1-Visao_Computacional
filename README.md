@@ -50,6 +50,37 @@ A configuração do treinamento foi cuidadosamente escolhida para maximizar o de
 
 ---
 
+## Pesquisa e Modelos Considerados
+
+Antes da seleção final do `DINO ViT`, foram estudadas outras arquiteturas e conceitos para garantir a escolha mais adequada para o problema e as restrições do projeto.
+
+### Outras Arquiteturas de Modelo
+
+- **ViT (Vision Transformer):** A arquitetura base escolhida.
+    - **Explicação Conceitual:** [An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale](https://research.google/blog/an-image-is-worth-16x16-words-transformers-for-image-recognition-at-scale/)
+    - **Página do Modelo Base:** [google/vit-base-patch16-224](https://huggingface.co/google/vit-base-patch16-224)
+    - **Repositório Original:** [google-research/vision_transformer](https://github.com/google-research/vision_transformer)
+
+- **BLIP (Bootstrapping Language-Image Pre-training):** Um modelo robusto para tarefas de visão e linguagem, como a geração de legendas. Foi considerado por sua eficiência, mas o foco do projeto era a classificação, tornando o ViT uma escolha mais direta.
+    - **Página do Modelo:** [Salesforce/blip-image-captioning-base](https://huggingface.co/Salesforce/blip-image-captioning-base)
+    - **Repositório Oficial:** [GitHub - salesforce/BLIP](https://github.com/salesforce/BLIP)
+
+- **CoCa (Contrastive Captioner):** Uma arquitetura de ponta que une aprendizado contrastivo e geração de legendas. Embora muito poderosa, sua complexidade e requisitos computacionais eram excessivos para um projeto focado em treinamento em CPU.
+    - **Repositório (PyTorch):** [GitHub - lucidrains/CoCa-pytorch](https://github.com/lucidrains/CoCa-pytorch)
+
+### Conceitos e Funções de Custo Estudados
+
+A escolha da função de custo é crucial em problemas de classificação. A pesquisa incluiu:
+
+- **Binary Cross-Entropy vs. Cross-Entropy:**
+    - **Análise sobre Binary Cross-Entropy:** [Artigo no Medium](https://medium.com/ensina-ai/uma-explicação-visual-para-função-de-custo-binary-cross-entropy-ou-log-loss-eaee662c396c)
+    - **Documentação da `CrossEntropyLoss` (PyTorch):** [Pytorch Docs](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) - A função de custo padrão para classificação multi-classe.
+    - **Explicação em Vídeo sobre Cross-Entropy:** [Vídeo no YouTube](https://www.youtube.com/watch?v=qZmBIBXM8oU)
+
+Esta pesquisa fundamentou a decisão de usar a `CrossEntropyLoss` padrão (embutida no `Trainer` da Hugging Face) e reforçou a escolha de um modelo focado em classificação (ViT).
+
+---
+
 ## Links para os Notebooks
 
 - **Notebook de Análise Exploratória (EDA):** [Acessar Colab](https://colab.research.google.com/drive/1qh-Pu2hlXK1hR-drnjNjc5tGgDh-Uif7?usp=sharing)
